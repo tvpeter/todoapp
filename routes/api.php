@@ -29,5 +29,6 @@ Route::group(['middleware'=> ['auth:sanctum']], function (){
 
     //tasks endpoints
     Route::post('tasks/add', [TasksController::class, 'store']);
+    Route::patch('tasks/{task}', [TasksController::class, 'update']);
     
 });
