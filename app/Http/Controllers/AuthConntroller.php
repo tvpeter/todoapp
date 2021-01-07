@@ -36,6 +36,31 @@ class AuthConntroller extends Controller
     }
 
     /**
+     * login a user 
+     * returns token for the logged in user
+     */
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails()){
+            return $this->formatResponse(false, 400, 'Invalid login input', $validator->errors());
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return $this->formatResponse(false, 404, 'User not found with given credentials');
+            }
+
+            $token = $user->createToken('AuthToken')->plainTextToken;
+
+            return $this->formatResponse(true, 200, 'Login successful', [ 'email' => $request->email, 'token' => $token]);
+    }
+
+    /**
      * validate create user inputs
      */
     protected function validateCreateUser($request){
@@ -50,7 +75,7 @@ class AuthConntroller extends Controller
     /**
      * format responsse data
      */
-    protected function formatResponse($status, $statusCode, $message, $data){
+    protected function formatResponse($status, $statusCode, $message, $data=null){
 
         return response()->json([
             'status' => $status,
