@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "08b743df-db62-4a73-9c9b-d4301f4bfdae",
+		"name": "TodoApp",
+		"description": "Todo API Application\n\n    This is a simple todo application that allows users to register, login and manage their tasks.\n    it is built with laravel, sql (mysql or sqlite database).\n\n    It allows a user to register, then add tasks with ability to update tasks status or delete tasks.\n\n    It uses bearer tokens to authenticate users.\n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"withtvpeter@gmail.com\",\n    \"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/user/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"login",
+						""
+					]
+				},
+				"description": "Login User\n - Login user with required email and password fields required.\n\n Returns:\n - 200 if successful\n-  400 if invalid inputs\n- 404 if user not found\n- 500 server error"
+			},
+			"response": []
+		},
+		{
+			"name": "Register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"withtvpeter@yahoo.com\",\n    \"name\" : \"Tyonum Vihiga\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/user/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"register",
+						""
+					]
+				},
+				"description": "Register a new user\n - required fields:\n        - name\n        - email\n        - password\nReturns:\n    - 201 if user created successfully\n    - 400 if input is invalid\n    - 500 for server errors"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|f7gHRlcNwtgUZffIWQjDQTJzK2jtw5R0OBQWJnBL",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"name\": \"List tasks for the day\",\n \"description\" : \"Routinely list all the tasks for the day\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/tasks/add/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks",
+						"add",
+						""
+					]
+				},
+				"description": "user adds task\n - Requires the following fields\n    - name \n    - Bearer token \n - Optional field\n    - description\nResponses:\n    - 201 if successful\n    - 401 if unauthenticated\n    - 400 if invalid input is supplied\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|H6nfVBd8O0ZYo2KmhOpNLc0F1pESV2nnb8xVHApq",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Take shower\",\n    \"description\": \"Shower after exercises\",\n    \"status\": \"completed\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/tasks/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						""
+					]
+				},
+				"description": "Update Task\n    -Requires:\n        Auth: Bearer token\n    -Optional:\n        -name\n        -description\n        -status\nResponses:\n- 200 if successful\n- 400 if bad request\n- 401 if not authorized\n- 403 if user attempt to update resource that does not belong to user\n"
+			},
+			"response": []
+		},
+		{
+			"name": "User logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "4|CpkIsbvzTbnLAEubClg3D0jbcuLx7EnwAEHg2Xst",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/logout/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout",
+						""
+					]
+				},
+				"description": "User logout\n- Required\n    Auth- Bearer token\n- Response:\n    - 200 if successful\n    - 401 if not authenticated\n    - 500 server error"
+			},
+			"response": []
+		},
+		{
+			"name": "User tasks",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|H6nfVBd8O0ZYo2KmhOpNLc0F1pESV2nnb8xVHApq",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/tasks/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks",
+						""
+					]
+				},
+				"description": "Get user tasks\n - Required:\n    - Bearer token\n- Response:\n    - 200 if successful\n    - 401 if not authenticated\n    - 500 if server error"
+			},
+			"response": []
+		},
+		{
+			"name": "User logout",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|H6nfVBd8O0ZYo2KmhOpNLc0F1pESV2nnb8xVHApq",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/logout/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout",
+						""
+					]
+				},
+				"description": "User logout\n- Required:\n    -Bearer Auth\n- Returns\n    - 200 if logout successful\n    - 401 if not authenticated\n    - 500 if server error"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ca804aa4-aadf-4f4f-a43d-db013b1f37ea",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "59954fc7-65ba-42d4-acee-71277c1c062f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
