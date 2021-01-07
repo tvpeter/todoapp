@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthConntroller;
 use App\Http\Controllers\TasksController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +29,7 @@ Route::group(['middleware'=> ['auth:sanctum']], function (){
     //tasks endpoints
     Route::post('tasks/add', [TasksController::class, 'store']);
     Route::patch('tasks/{task}', [TasksController::class, 'update']);
+    Route::delete('tasks/{task}', [TasksController::class, 'destroy']);
+    Route::get('tasks', [TasksController::class, 'index']);
     
 });
