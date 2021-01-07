@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthConntroller;
+use App\Http\Controllers\TasksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('user/register', [AuthConntroller::class, 'store']);
 Route::post('user/login', [AuthConntroller::class, 'login']);
+
+Route::group(['middleware'=> ['auth:sanctum']], function (){
+    
+    Route::post('logout', [AuthConntroller::class, 'logout']);
+
+    //tasks endpoints
+    Route::post('tasks/add', [TasksController::class, 'store']);
+    
+});

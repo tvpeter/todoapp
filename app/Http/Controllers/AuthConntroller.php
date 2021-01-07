@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\FormatResponse;
 
 class AuthConntroller extends Controller
 {
+
+    use FormatResponse;
     /**
      * create a new user
      * 
@@ -42,7 +45,7 @@ class AuthConntroller extends Controller
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ]);
 
         if($validator->fails()){
@@ -60,6 +63,14 @@ class AuthConntroller extends Controller
             return $this->formatResponse(true, 200, 'Login successful', [ 'email' => $request->email, 'token' => $token]);
     }
 
+
+    public function logout(Request $request){
+        
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->formatResponse(true, 200, 'logout successful');
+    }
+
     /**
      * validate create user inputs
      */
@@ -70,19 +81,6 @@ class AuthConntroller extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
-    }
-
-    /**
-     * format responsse data
-     */
-    protected function formatResponse($status, $statusCode, $message, $data=null){
-
-        return response()->json([
-            'status' => $status,
-            'statusCode' => $statusCode,
-            'message' => $message,
-            'data' => $data
-        ], $statusCode);
     }
 
 }
