@@ -252,7 +252,7 @@
 			"response": []
 		},
 		{
-			"name": "User logout",
+			"name": "Delete Task",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"accept": true
@@ -264,12 +264,12 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "5|H6nfVBd8O0ZYo2KmhOpNLc0F1pESV2nnb8xVHApq",
+							"value": "1|MPrMCvkTBMzNJzmH7ntARrEtvVuke6yqsj4tRJMU",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Accept",
@@ -278,7 +278,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/api/logout/",
+					"raw": "http://localhost:8000/api/tasks/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -286,11 +286,11 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"logout",
-						""
+						"tasks",
+						"1"
 					]
 				},
-				"description": "User logout\n- Required:\n    -Bearer Auth\n- Returns\n    - 200 if logout successful\n    - 401 if not authenticated\n    - 500 if server error"
+				"description": "Delete task\n - Required\n    -Bearer Auth\n- Response:\n    - 200 if successful\n    - 401 if not authenticated\n    - 404 if resource is not found\n    - 500 server error"
 			},
 			"response": []
 		}

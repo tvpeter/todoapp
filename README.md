@@ -21,5 +21,21 @@ The API is documented using postman.
 
 The collection is found [here](https://www.getpostman.com/collections/1c16919b0bae1cdd9644) or downloaded from the repo [here](https://github.com/tvpeter/todoapp/blob/master/TodoApp.postman_collection.json)
 
+## The following endpoints are available
+#### Auth Routes
+
+- {{DEV}}api/user/register/  - POST # register user
+- {{DEV}}api/user/login/  -POST #login endpoint
+- {{DEV}}api/logout/ -POST #logout
+
+#### Task Routes
+- {{DEV}}api/tasks/add/  -POST # user add task
+- {{DEV}}api/tasks/{id} -GET # get specific task
+- {{DEV}}api/tasks/ -PATCH # user tasks
+- {{DEV}}api/tasks/{id} -DELETE #  delete task
+
+where {{DEV}} is your environment variable for the local server address eg http://localhost:8000/ 
+
+
 Your contributions are highly welcome.
     Thank you.
