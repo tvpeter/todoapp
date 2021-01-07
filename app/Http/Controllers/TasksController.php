@@ -21,7 +21,7 @@ class TasksController extends Controller
      */
     public function index(Request $request){
 
-        $tasks = $request->user()->tasks;
+        $tasks = Tasks::where('user_id', $request->user()->id)->jsonPaginate();
 
         return $this->formatResponse(true, 200, 'Users tasks retrieved successfully', $tasks);
     }
@@ -109,4 +109,5 @@ class TasksController extends Controller
         return $this->formatResponse(true, 200, 'Task deleted successfully', $task);
     }
 
+    
 }
